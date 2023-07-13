@@ -29,8 +29,10 @@ module "sonarqube_dev" {
 
   settings = {}
 
-  app_image_name        = "sonarqube:9.9.1-community" # https://hub.docker.com/_/sonarqube/tags
-  postgresql_image_name = "postgres:15.3"             # https://hub.docker.com/_/postgres/tags
+  app_image_name = "sonarqube:9.9.1-community" # https://hub.docker.com/_/sonarqube/tags
+
+  nginx_image_name      = "nginx:1.25.1"  # https://hub.docker.com/_/nginx/tags
+  postgresql_image_name = "postgres:15.3" # https://hub.docker.com/_/postgres/tags
 }
 ```
 
