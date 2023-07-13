@@ -16,7 +16,14 @@ module "sonarqube_dev" {
 
   # Networking
 
-  http_port = 10080
+  https_port = 10443
+  http_port  = 10080
+
+  # Reverse Proxy
+
+  ssl_crt       = module.fisch3r_net.crt
+  ssl_key       = module.fisch3r_net.key
+  max_body_size = "20M"
 
   # SonarQube Application
 
