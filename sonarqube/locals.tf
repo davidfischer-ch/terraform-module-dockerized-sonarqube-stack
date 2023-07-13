@@ -17,6 +17,11 @@ locals {
     SQ_DATA_DIR       = local.container_data_directory,
     SQ_EXTENSIONS_DIR = local.container_extensions_directory,
     SQ_LOGS_DIR       = local.container_logs_directory,
-    SQ_TEMP_DIR       = local.container_temp_directory
+    SQ_TEMP_DIR       = local.container_temp_directory,
+
+    # Database Endpoint
+    SONAR_JDBC_URL      = "jdbc:postgresql://${var.database_host}:${var.database_port}/${var.database_name}"
+    SONAR_JDBC_USERNAME = var.database_user
+    SONAR_JDBC_PASSWORD = var.database_password
   }
 }
