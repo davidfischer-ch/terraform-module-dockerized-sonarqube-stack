@@ -1,8 +1,5 @@
 # https://docs.sonarsource.com/sonarqube/latest/setup-and-upgrade/configure-and-operate-a-server/operating-the-server/#using-nginx
 
-# TODO !!
-
-
 upstream app_process {
     server {{ host }}:{{ port|int }};
 }
@@ -47,39 +44,6 @@ server {
     error_log  /var/log/nginx/{{ name }}/error.log  {{ error_log_level }};
 
     # Locations ------------------------------------------------------------------------------------
-
-    location /robots.txt {
-        alias {{ static_directory }}/{{ project_app }}/robots.txt;
-    }
-
-    location /favicon/ {
-        alias {{ static_directory }}/{{ project_app }}/favicons/active/;
-    }
-
-    location /static/ {
-        access_log off;
-        autoindex  on;
-        {% if not debug %}
-        expires    max;
-        {% endif %}
-        sendfile   off;  # Avoid Nginx serving outdated static files
-
-        alias {{ static_directory }}/;
-    }
-
-    location /media/ {
-        access_log off;
-        autoindex  on;
-        sendfile   off;  # Avoid Nginx serving outdated static files
-
-        alias {{ media_directory }}/;
-    }
-
-    location /protected/ {
-        internal;
-
-        alias {{ protected_directory }}/;
-    }
 
     location / {
         # Security - http://breachattack.com/resources/BREACH%20-%20SSL,%20gone%20in%2030%20seconds.pdf
