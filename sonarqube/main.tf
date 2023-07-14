@@ -15,7 +15,7 @@ resource "docker_container" "server" {
 
   # shm_size = 256 # MB
 
-  env = local.settings
+  env = toset([for k, v in local.settings : "${k}=\"${v}\""])
 
   hostname = var.identifier
 
@@ -52,5 +52,14 @@ resource "docker_container" "server" {
     container_path = local.container_temp_directory
     host_path      = local.host_temp_directory
     read_only      = false
+  }
+
+  provisioner "local-exec" {
+    command = <<EOT
+      chmod 777 "${local.host_data_directory}"
+      chmod 777 "${local.host_extensions_directory}"
+      chmod 777 "${local.host_logs_directory}"
+      chmod 777 "${local.host_temp_directory}"
+    EOT
   }
 }

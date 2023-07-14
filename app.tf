@@ -6,7 +6,7 @@ resource "docker_image" "app" {
 module "app" {
   source = "./sonarqube"
 
-  identifier     = var.identifier
+  identifier     = "${var.identifier}-app"
   enabled        = var.enabled
   image_id       = docker_image.app.image_id
   data_directory = "${var.data_directory}/app"
