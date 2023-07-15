@@ -15,7 +15,7 @@ resource "docker_container" "server" {
 
   # shm_size = 256 # MB
 
-  env = toset([for k, v in local.settings : "${k}=\"${v}\""])
+  env = toset([for k, v in local.settings : "${k}=${v}"])
 
   hostname = var.identifier
 
