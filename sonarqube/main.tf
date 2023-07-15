@@ -23,13 +23,6 @@ resource "docker_container" "server" {
     name = var.network_id
   }
 
-  ports {
-    internal = 9000
-    external = var.port
-    ip       = "0.0.0.0"
-    protocol = "tcp"
-  }
-
   volumes {
     container_path = local.container_data_directory
     host_path      = local.host_data_directory

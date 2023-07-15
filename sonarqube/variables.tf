@@ -24,6 +24,11 @@ variable "network_id" {
 variable "port" {
   type    = number
   default = 9000
+
+  validation {
+    condition     = var.port == 9000
+    error_message = "Having `port` different than 9000 is not yet implemented."
+  }
 }
 
 # SonarQube Application

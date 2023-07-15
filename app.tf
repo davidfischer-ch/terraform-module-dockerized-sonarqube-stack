@@ -14,7 +14,6 @@ module "app" {
   # Networking
 
   network_id = docker_network.app.id
-  port       = var.http_port
 
   # SonarQube Application
 
