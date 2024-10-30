@@ -17,6 +17,7 @@ module "reverse_proxy" {
 
   # Miscellaneous
 
+  hosts   = var.hosts
   modules = var.nginx_modules
 
   # Networking

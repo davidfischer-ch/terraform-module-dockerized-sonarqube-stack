@@ -15,7 +15,13 @@ variable "data_directory" {
   type = string
 }
 
-# Networking
+# Networking ---------------------------------------------------------------------------------------
+
+variable "hosts" {
+  type        = map(string)
+  default     = {}
+  description = "Add entries to container hosts file."
+}
 
 variable "network_id" {
   type = string
@@ -31,7 +37,7 @@ variable "port" {
   }
 }
 
-# SonarQube Application
+# SonarQube Application ----------------------------------------------------------------------------
 
 variable "settings" {
   type        = map(string)
@@ -39,7 +45,7 @@ variable "settings" {
   description = "Any additional environment variables for the application (e.g. { FOO = \"bar\" })"
 }
 
-# Database Endpoint
+# Database Endpoint --------------------------------------------------------------------------------
 
 variable "database_host" {
   type = string

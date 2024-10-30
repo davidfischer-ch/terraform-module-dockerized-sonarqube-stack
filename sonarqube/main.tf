@@ -17,6 +17,14 @@ resource "docker_container" "server" {
 
   env = toset([for k, v in local.settings : "${k}=${v}"])
 
+  dynamic "host" {
+    for_each = var.hosts
+    content {
+      host = host.key
+      ip   = host.value
+    }
+  }
+
   hostname = var.identifier
 
   networks_advanced {

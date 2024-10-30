@@ -17,7 +17,13 @@ variable "data_directory" {
   description = "Where data will be persisted (volumes will be mounted as sub-directories)."
 }
 
-# Networking
+# Networking ---------------------------------------------------------------------------------------
+
+variable "hosts" {
+  type        = map(string)
+  default     = {}
+  description = "Add entries to container hosts file."
+}
 
 variable "https_port" {
   type        = number
@@ -29,7 +35,7 @@ variable "http_port" {
   description = "Bind the reverse proxy's HTTP port."
 }
 
-# Reverse Proxy
+# Reverse Proxy ------------------------------------------------------------------------------------
 
 variable "ssl_crt" {
   type = string
@@ -44,7 +50,7 @@ variable "max_body_size" {
   default = "20M"
 }
 
-# SonarQube Application
+# SonarQube Application ----------------------------------------------------------------------------
 
 variable "settings" {
   type        = map(string)
@@ -60,7 +66,7 @@ variable "domains" {
   type = list(string)
 }
 
-# Images
+# Images -------------------------------------------------------------------------------------------
 
 variable "app_image_name" {
   type        = string
@@ -77,14 +83,14 @@ variable "postgresql_image_name" {
   default = "postgres:latest"
 }
 
-# Database Container
+# Database Container -------------------------------------------------------------------------------
 
 variable "postgresql_max_connections" {
   type    = number
   default = 100
 }
 
-# Reverse Proxy Container
+# Reverse Proxy Container --------------------------------------------------------------------------
 
 variable "nginx_log_level" {
   type    = string
