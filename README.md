@@ -10,7 +10,7 @@ Example:
 
 ```
 module "sonarqube_dev" {
-  source = "git::ssh://git@gitlab.fisch3r.net:10022/family/infrastructure/modules/terraform-module-dockerized-sonarqube-stack.git?ref=main"
+  source = "git+https://github.com/davidfischer-ch/terraform-module-dockerized-sonarqube-stack.git?ref=main"
 
   identifier     = "sonarqube-dev"
   enabled        = true
