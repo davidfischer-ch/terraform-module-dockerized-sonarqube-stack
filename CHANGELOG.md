@@ -1,5 +1,11 @@
 # Changelog
 
+## Release v1.0.3 (2026-01-03)
+
+### Fix and enhancements
+
+* Module: Declare network_mode bridge to prevent infinite recreate
+
 ## Release v1.0.2 (2025-06-11)
 
 ### Features
