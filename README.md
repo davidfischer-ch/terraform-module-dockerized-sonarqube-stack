@@ -14,6 +14,8 @@ The module creates three interconnected components on a dedicated bridge network
 
 ## Usage
 
+See [examples/default](examples/default) for a complete working configuration.
+
 ```hcl
 provider "acme" {
   server_url = "https://acme-v02.api.letsencrypt.org/directory"
