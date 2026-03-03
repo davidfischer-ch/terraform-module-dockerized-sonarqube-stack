@@ -15,8 +15,33 @@ The module creates three interconnected components on a dedicated bridge network
 ## Usage
 
 ```hcl
+provider "acme" {
+  server_url = "https://acme-v02.api.letsencrypt.org/directory"
+}
+
+resource "aws_route53_zone" "main" {
+  name = "example.com"
+}
+
+resource "acme_registration" "main" {
+  email_address = "admin@example.com"
+}
+
+resource "acme_certificate" "sonarqube" {
+  account_key_pem = acme_registration.main.account_key_pem
+  common_name     = "sonarqube.example.com"
+
+  dns_challenge {
+    provider = "route53"
+
+    config = {
+      AWS_HOSTED_ZONE_ID = aws_route53_zone.main.zone_id
+    }
+  }
+}
+
 module "sonarqube" {
-  source = "git::https://github.com/davidfischer-ch/terraform-module-dockerized-sonarqube-stack.git?ref=main"
+  source = "git::https://github.com/davidfischer-ch/terraform-module-dockerized-sonarqube-stack.git?ref=1.0.3"
 
   identifier     = "sonarqube"
   enabled        = true
@@ -29,8 +54,8 @@ module "sonarqube" {
 
   # Reverse Proxy
 
-  ssl_crt       = module.fisch3r_net.crt
-  ssl_key       = module.fisch3r_net.key
+  ssl_crt       = join("", [acme_certificate.sonarqube.certificate_pem, acme_certificate.sonarqube.issuer_pem])
+  ssl_key       = acme_certificate.sonarqube.private_key_pem
   max_body_size = "20M"
 
   # SonarQube Application
@@ -41,9 +66,9 @@ module "sonarqube" {
 
   # Images
 
-  app_image_name        = "sonarqube:9.9.1-community"
-  nginx_image_name      = "nginx:1.25.1"
-  postgresql_image_name = "postgres:15.3"
+  app_image_name        = "sonarqube:9.9.6-community"
+  nginx_image_name      = "nginx:1.28.0"
+  postgresql_image_name = "postgres:15.10"
 }
 ```
 
