@@ -1,5 +1,18 @@
 # Changelog
 
+## Release v1.1.0 (2026-03-13)
+
+### Features
+
+* Add variable `wait` (default to `false`)
+* Add `nginx_uid`/`nginx_gid` process identity variables for the reverse proxy (default `0`)
+* Add `postgresql_uid`/`postgresql_gid` process identity variables for the database (default `999`/`0`)
+* Automatically adds `NET_BIND_SERVICE` capability to nginx container if `uid` is not root (required for ports binding)
+
+### Fix and enhancements
+
+* Update README and example
+
 ## Release v1.0.4 (2026-03-13)
 
 ### Fix and enhancements
