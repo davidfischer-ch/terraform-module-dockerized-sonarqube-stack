@@ -108,7 +108,7 @@ data_directory/
 | `ssl_key` | `string` | — | SSL private key. |
 | `max_body_size` | `string` | `"20M"` | Nginx max body size. |
 | `settings` | `map(string)` | `{}` | Additional environment variables for SonarQube. |
-| `debug` | `bool` | — | Enable debug mode. |
+| `debug` | `bool` | `false` | Enable debug mode. |
 | `domains` | `list(string)` | — | Domains for the reverse proxy. |
 | `app_image_name` | `string` | — | [SonarQube](https://hub.docker.com/_/sonarqube/tags) Docker image name. |
 | `nginx_image_name` | `string` | `"nginx:latest"` | [Nginx](https://hub.docker.com/_/nginx/tags) Docker image name. |

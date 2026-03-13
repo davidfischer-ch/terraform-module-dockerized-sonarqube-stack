@@ -103,6 +103,7 @@ variable "settings" {
 variable "debug" {
   type        = bool
   description = "Enable SonarQube debug mode."
+  default     = false
 }
 
 variable "domains" {
