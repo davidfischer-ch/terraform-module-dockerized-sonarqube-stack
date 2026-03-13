@@ -97,8 +97,8 @@ data_directory/
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
 | `identifier` | `string` | — | Unique name for resources (must match `^[a-z]+(-[a-z0-9]+)*$`). |
-| `enabled` | `bool` | — | Start or stop the containers. |
-| `wait` | `bool` | `false` | Wait for containers to reach a healthy state after creation (applies to Nginx and PostgreSQL). |
+| `enabled` | `bool` | `true` | Start or stop the containers. |
+| `wait` | `bool` | `true` | Wait for containers to reach a healthy state after creation (applies to Nginx and PostgreSQL). |
 | `data_directory` | `string` | — | Host path for persistent volumes. |
 | `hosts` | `map(string)` | `{}` | Extra `/etc/hosts` entries for the containers. |
 | `https_port` | `number` | — | Reverse proxy HTTPS port. |
