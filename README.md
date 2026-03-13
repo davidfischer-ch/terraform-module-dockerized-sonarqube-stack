@@ -43,7 +43,7 @@ resource "acme_certificate" "sonarqube" {
 }
 
 module "sonarqube" {
-  source = "git::https://github.com/davidfischer-ch/terraform-module-dockerized-sonarqube-stack.git?ref=1.1.0"
+  source = "git::https://github.com/davidfischer-ch/terraform-module-dockerized-sonarqube-stack.git?ref=1.1.1"
 
   identifier     = "sonarqube"
   data_directory = "/data/sonarqube"
