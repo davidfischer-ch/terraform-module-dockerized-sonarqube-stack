@@ -1,5 +1,16 @@
 # Changelog
 
+## Release v1.1.1 (2026-03-13)
+
+### Fix and enhancements
+
+* Upgrade `nginx` module to 1.1.3
+* Upgrade `postgresql` module to 1.2.2
+* Add `debug` missing default to `false`
+* Set `enabled` and `wait` defaults to `true`
+* Refine variable descriptions, validators, and attribute ordering
+* Remove redundant default values from examples and README
+
 ## Release v1.1.0 (2026-03-13)
 
 ### Features
