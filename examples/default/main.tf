@@ -20,10 +20,11 @@ resource "acme_certificate" "sonarqube" {
 }
 
 module "sonarqube" {
-  source = "git::https://github.com/davidfischer-ch/terraform-module-dockerized-sonarqube-stack.git?ref=1.0.3"
+  source = "git::https://github.com/davidfischer-ch/terraform-module-dockerized-sonarqube-stack.git?ref=1.1.0"
 
   identifier     = "sonarqube"
   enabled        = true
+  wait           = true
   data_directory = "/data/sonarqube"
 
   # Networking
@@ -33,7 +34,10 @@ module "sonarqube" {
 
   # Reverse Proxy
 
-  ssl_crt       = join("", [acme_certificate.sonarqube.certificate_pem, acme_certificate.sonarqube.issuer_pem])
+  ssl_crt = join("", [
+    acme_certificate.sonarqube.certificate_pem,
+    acme_certificate.sonarqube.issuer_pem
+  ])
   ssl_key       = acme_certificate.sonarqube.private_key_pem
   max_body_size = "20M"
 

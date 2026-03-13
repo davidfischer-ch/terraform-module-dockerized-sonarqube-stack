@@ -43,10 +43,11 @@ resource "acme_certificate" "sonarqube" {
 }
 
 module "sonarqube" {
-  source = "git::https://github.com/davidfischer-ch/terraform-module-dockerized-sonarqube-stack.git?ref=1.0.3"
+  source = "git::https://github.com/davidfischer-ch/terraform-module-dockerized-sonarqube-stack.git?ref=1.1.0"
 
   identifier     = "sonarqube"
   enabled        = true
+  wait           = true
   data_directory = "/data/sonarqube"
 
   # Networking
@@ -68,9 +69,9 @@ module "sonarqube" {
 
   # Images
 
-  app_image_name        = "sonarqube:9.9.6-community"
-  nginx_image_name      = "nginx:1.28.0"
-  postgresql_image_name = "postgres:15.10"
+  app_image_name        = "sonarqube:9.9.6-community" # https://hub.docker.com/_/sonarqube/tags
+  nginx_image_name      = "nginx:1.28.0"              # https://hub.docker.com/_/nginx/tags
+  postgresql_image_name = "postgres:15.10"            # https://hub.docker.com/_/postgres/tags
 }
 ```
 
@@ -97,6 +98,7 @@ data_directory/
 |------|------|---------|-------------|
 | `identifier` | `string` | — | Unique name for resources (must match `^[a-z]+(-[a-z0-9]+)*$`). |
 | `enabled` | `bool` | — | Start or stop the containers. |
+| `wait` | `bool` | `false` | Wait for containers to reach a healthy state after creation (applies to Nginx and PostgreSQL). |
 | `data_directory` | `string` | — | Host path for persistent volumes. |
 | `hosts` | `map(string)` | `{}` | Extra `/etc/hosts` entries for the containers. |
 | `https_port` | `number` | — | Reverse proxy HTTPS port. |
@@ -110,10 +112,14 @@ data_directory/
 | `domains` | `list(string)` | — | Domains for the reverse proxy. |
 | `app_image_name` | `string` | — | [SonarQube](https://hub.docker.com/_/sonarqube/tags) Docker image name. |
 | `nginx_image_name` | `string` | `"nginx:latest"` | [Nginx](https://hub.docker.com/_/nginx/tags) Docker image name. |
-| `postgresql_image_name` | `string` | `"postgres:latest"` | [PostgreSQL](https://hub.docker.com/_/postgres/tags) Docker image name. |
-| `postgresql_max_connections` | `number` | `100` | PostgreSQL `max_connections`. |
+| `nginx_uid` | `number` | `0` | UID of the user running the reverse-proxy container. |
+| `nginx_gid` | `number` | `0` | GID of the user running the reverse-proxy container. |
 | `nginx_log_level` | `string` | `"warn"` | Nginx error log level. |
 | `nginx_modules` | `list(string)` | `[]` | Nginx modules to load. |
+| `postgresql_image_name` | `string` | `"postgres:latest"` | [PostgreSQL](https://hub.docker.com/_/postgres/tags) Docker image name. |
+| `postgresql_uid` | `number` | `999` | UID of the user running the database container. |
+| `postgresql_gid` | `number` | `0` | GID of the user running the database container. |
+| `postgresql_max_connections` | `number` | `100` | PostgreSQL `max_connections`. |
 
 ## Requirements
 
