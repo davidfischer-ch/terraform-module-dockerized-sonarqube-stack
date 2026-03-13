@@ -22,8 +22,11 @@ resource "acme_certificate" "sonarqube" {
 module "sonarqube" {
   source = "git::https://github.com/davidfischer-ch/terraform-module-dockerized-sonarqube-stack.git?ref=1.1.0"
 
-  identifier     = "sonarqube"
-  data_directory = "/data/sonarqube"
+  identifier = "sonarqube"
+
+  # Process
+
+  app_image_name = "sonarqube:9.9.6-community" # https://hub.docker.com/_/sonarqube/tags
 
   # Networking
 
@@ -38,13 +41,19 @@ module "sonarqube" {
   ])
   ssl_key = acme_certificate.sonarqube.private_key_pem
 
+  # Storage
+
+  data_directory = "/data/sonarqube"
+
   # SonarQube Application
 
   domains = ["sonarqube.example.com"]
 
-  # Images
+  # Database Container
 
-  app_image_name        = "sonarqube:9.9.6-community" # https://hub.docker.com/_/sonarqube/tags
-  nginx_image_name      = "nginx:1.28.0"              # https://hub.docker.com/_/nginx/tags
-  postgresql_image_name = "postgres:15.10"            # https://hub.docker.com/_/postgres/tags
+  postgresql_image_name = "postgres:15.10" # https://hub.docker.com/_/postgres/tags
+
+  # Reverse Proxy Container
+
+  nginx_image_name = "nginx:1.28.0" # https://hub.docker.com/_/nginx/tags
 }

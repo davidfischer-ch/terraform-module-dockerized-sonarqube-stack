@@ -62,11 +62,17 @@ module "sonarqube" {
 
   domains = ["sonarqube.example.com"]
 
-  # Images
+  # Process
 
-  app_image_name        = "sonarqube:9.9.6-community" # https://hub.docker.com/_/sonarqube/tags
-  nginx_image_name      = "nginx:1.28.0"              # https://hub.docker.com/_/nginx/tags
-  postgresql_image_name = "postgres:15.10"            # https://hub.docker.com/_/postgres/tags
+  app_image_name = "sonarqube:9.9.6-community" # https://hub.docker.com/_/sonarqube/tags
+
+  # Database Container
+
+  postgresql_image_name = "postgres:15.10" # https://hub.docker.com/_/postgres/tags
+
+  # Reverse Proxy Container
+
+  nginx_image_name = "nginx:1.28.0" # https://hub.docker.com/_/nginx/tags
 }
 ```
 
@@ -94,27 +100,27 @@ data_directory/
 | `identifier` | `string` | — | Unique name for resources (must match `^[a-z]+(-[a-z0-9]+)*$`). |
 | `enabled` | `bool` | `true` | Start or stop the containers. |
 | `wait` | `bool` | `true` | Wait for containers to reach a healthy state after creation (applies to Nginx and PostgreSQL). |
-| `data_directory` | `string` | — | Host path for persistent volumes. |
+| `app_image_name` | `string` | — | [SonarQube](https://hub.docker.com/_/sonarqube/tags) Docker image name. |
 | `hosts` | `map(string)` | `{}` | Extra `/etc/hosts` entries for the containers. |
 | `https_port` | `number` | — | Reverse proxy HTTPS port. |
 | `http_port` | `number` | — | Reverse proxy HTTP port. |
 | `dhparam_use_dsa` | `bool` | `false` | Use DSA instead of DH params (faster but weaker). |
-| `ssl_crt` | `string` | — | SSL certificate. |
-| `ssl_key` | `string` | — | SSL private key. |
+| `ssl_crt` | `string` | — | TLS certificate content (PEM format). |
+| `ssl_key` | `string` | — | TLS private key content (PEM format, sensitive). |
 | `max_body_size` | `string` | `"20M"` | Nginx max body size. |
+| `data_directory` | `string` | — | Host path for persistent volumes. |
 | `settings` | `map(string)` | `{}` | Additional environment variables for SonarQube. |
 | `debug` | `bool` | `false` | Enable debug mode. |
 | `domains` | `list(string)` | — | Domains for the reverse proxy. |
-| `app_image_name` | `string` | — | [SonarQube](https://hub.docker.com/_/sonarqube/tags) Docker image name. |
+| `postgresql_image_name` | `string` | `"postgres:latest"` | [PostgreSQL](https://hub.docker.com/_/postgres/tags) Docker image name. |
+| `postgresql_uid` | `number` | `999` | UID of the user running the database container. |
+| `postgresql_gid` | `number` | `0` | GID of the user running the database container. |
+| `postgresql_max_connections` | `number` | `100` | PostgreSQL `max_connections`. |
 | `nginx_image_name` | `string` | `"nginx:latest"` | [Nginx](https://hub.docker.com/_/nginx/tags) Docker image name. |
 | `nginx_uid` | `number` | `0` | UID of the user running the reverse-proxy container. |
 | `nginx_gid` | `number` | `0` | GID of the user running the reverse-proxy container. |
 | `nginx_log_level` | `string` | `"warn"` | Nginx error log level. |
 | `nginx_modules` | `list(string)` | `[]` | Nginx modules to load. |
-| `postgresql_image_name` | `string` | `"postgres:latest"` | [PostgreSQL](https://hub.docker.com/_/postgres/tags) Docker image name. |
-| `postgresql_uid` | `number` | `999` | UID of the user running the database container. |
-| `postgresql_gid` | `number` | `0` | GID of the user running the database container. |
-| `postgresql_max_connections` | `number` | `100` | PostgreSQL `max_connections`. |
 
 ## Requirements
 

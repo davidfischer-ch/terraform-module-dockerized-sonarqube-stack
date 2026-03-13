@@ -22,6 +22,7 @@ variable "wait" {
   EOT
   default     = true
 }
+
 # Process ------------------------------------------------------------------------------------------
 
 variable "app_image_name" {

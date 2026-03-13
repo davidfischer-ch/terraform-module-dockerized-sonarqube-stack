@@ -11,10 +11,6 @@ variable "image_id" {
   description = "SonarQube application's image ID."
 }
 
-variable "data_directory" {
-  type = string
-}
-
 # Networking ---------------------------------------------------------------------------------------
 
 variable "hosts" {
@@ -35,6 +31,12 @@ variable "port" {
     condition     = var.port == 9000
     error_message = "Having `port` different than 9000 is not yet implemented."
   }
+}
+
+# Storage ------------------------------------------------------------------------------------------
+
+variable "data_directory" {
+  type = string
 }
 
 # SonarQube Application ----------------------------------------------------------------------------
