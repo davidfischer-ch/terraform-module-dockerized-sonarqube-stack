@@ -12,9 +12,19 @@ variable "enabled" {
   description = "Toggle the containers (started or stopped)."
 }
 
-variable "data_directory" {
+variable "wait" {
+  type        = bool
+  default     = false
+  description = <<EOT
+    Wait for the containers to reach an healthy state after creation.
+    Current restriction: Applies only for Nginx and PostgreSQL.
+  EOT
+}
+# Process ------------------------------------------------------------------------------------------
+
+variable "app_image_name" {
   type        = string
-  description = "Where data will be persisted (volumes will be mounted as sub-directories)."
+  description = "SonarQube application's image name."
 }
 
 # Networking ---------------------------------------------------------------------------------------
@@ -60,6 +70,13 @@ variable "max_body_size" {
   default = "20M"
 }
 
+# Storage ------------------------------------------------------------------------------------------
+
+variable "data_directory" {
+  type        = string
+  description = "Where data will be persisted (volumes will be mounted as sub-directories)."
+}
+
 # SonarQube Application ----------------------------------------------------------------------------
 
 variable "settings" {
@@ -76,31 +93,59 @@ variable "domains" {
   type = list(string)
 }
 
-# Images -------------------------------------------------------------------------------------------
-
-variable "app_image_name" {
-  type        = string
-  description = "SonarQube application's image name"
-}
-
-variable "nginx_image_name" {
-  type    = string
-  default = "nginx:latest"
-}
+# Database Container -------------------------------------------------------------------------------
 
 variable "postgresql_image_name" {
   type    = string
   default = "postgres:latest"
 }
 
-# Database Container -------------------------------------------------------------------------------
+variable "postgresql_uid" {
+  type        = number
+  default     = 999
+  description = "UID of the user running the database container and owning the data directories."
+}
+
+variable "postgresql_gid" {
+  type        = number
+  default     = 0
+  description = "GID of the user running the database container and owning the data directories."
+}
 
 variable "postgresql_max_connections" {
-  type    = number
-  default = 100
+  type        = number
+  default     = 100
+  description = "Maximum number of PostgreSQL connections."
+  validation {
+    condition     = var.postgresql_max_connections >= 1 && var.postgresql_max_connections <= 262143
+    error_message = "Argument `postgresql_max_connections` should be between 1 and 262143."
+  }
 }
 
 # Reverse Proxy Container --------------------------------------------------------------------------
+
+variable "nginx_image_name" {
+  type    = string
+  default = "nginx:latest"
+}
+
+variable "nginx_uid" {
+  type        = number
+  default     = 0
+  description = <<EOT
+    UID of the user running the reverse-proxy container.
+    If not root then NET_IND_SERVICE capability will be added for nginx to bind ports 80/443.
+  EOT
+}
+
+variable "nginx_gid" {
+  type        = number
+  default     = 0
+  description = <<EOT
+    GID of the user running the reverse-proxy container.
+    If not root then NET_IND_SERVICE capability will be added for nginx to bind ports 80/443.
+  EOT
+}
 
 variable "nginx_log_level" {
   type    = string
