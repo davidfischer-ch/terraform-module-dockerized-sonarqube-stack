@@ -1,5 +1,15 @@
 # Changelog
 
+## Release v1.2.0 (2026-04-28)
+
+### Minor compatibility breaks
+
+* Bump minimum `NikolaLohinski/jinja` provider version from `1.17.0` to `2.0.0`. Consumers must run `terraform init -upgrade` to refresh the provider.
+
+### Fix and enhancements
+
+* Upgrade nginx to 1.3.0
+
 ## Release v1.1.2 (2026-03-13)
 
 ### Fix and enhancements
