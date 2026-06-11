@@ -20,7 +20,7 @@ module "app" {
 
   # SonarQube Application
 
-  settings = {}
+  settings = var.settings
 
   database_host     = module.database.host
   database_port     = module.database.port
