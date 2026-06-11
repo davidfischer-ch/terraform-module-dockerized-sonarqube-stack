@@ -47,6 +47,16 @@ module "sonarqube" {
 
   # SonarQube Application
 
+  settings = {
+    # Raise ES disk watermarks above defaults (low=85%, high=90%, flood=95%)
+    # when /data is shared with other services.
+    SONAR_SEARCH_JAVAADDITIONALOPTS = join(" ", [
+      "-Des.cluster.routing.allocation.disk.watermark.low=95%",
+      "-Des.cluster.routing.allocation.disk.watermark.high=95%",
+      "-Des.cluster.routing.allocation.disk.watermark.flood_stage=98%",
+    ])
+  }
+
   domains = ["sonarqube.example.com"]
 
   # Database Container
