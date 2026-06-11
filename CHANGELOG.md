@@ -1,5 +1,12 @@
 # Changelog
 
+## Release v1.3.1 (2026-06-11)
+
+### Fix and enhancements
+
+* Fix `var.settings` not being passed through to the app sub-module (was hardcoded to `{}`)
+* Add `settings` example with ES disk watermark configuration
+
 ## Release v1.3.0 (2026-04-28)
 
 ### Minor compatibility breaks
