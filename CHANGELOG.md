@@ -4,11 +4,13 @@
 
 ### Features
 
-* Add `es_cluster_settings` input applying persistent Elasticsearch cluster settings (e.g. disk watermarks) via the cluster-settings API at startup, through a wrapper entrypoint
+* Add `es_cluster_settings` input applying persistent Elasticsearch cluster settings (e.g. disk
+  watermarks) via the cluster-settings API at startup, through a wrapper entrypoint
 
 ### Fix and enhancements
 
-* Replace the broken disk-watermark example with `es_cluster_settings` (the embedded ES ignores `-Des.*` JVM properties), and show `settings` used for ES JVM options
+* Replace the broken disk-watermark example with `es_cluster_settings`
+  (the embedded ES ignores `-Des.*` JVM properties), and show `settings` used for ES JVM options
 
 ## Release v1.3.1 (2026-06-11)
 
@@ -21,13 +23,15 @@
 
 ### Minor compatibility breaks
 
-* Upgrade nginx-templates to 1.1.0; internal nginx now requires TLS 1.2+ and AEAD-only ciphers (see nginx-templates CHANGELOG for full details)
+* Upgrade nginx-templates to 1.1.0; internal nginx now requires TLS 1.2+ and AEAD-only ciphers
+  (see nginx-templates CHANGELOG for full details)
 
 ## Release v1.2.0 (2026-04-28)
 
 ### Minor compatibility breaks
 
-* Bump minimum `NikolaLohinski/jinja` provider version from `1.17.0` to `2.0.0`. Consumers must run `terraform init -upgrade` to refresh the provider.
+* Bump minimum `NikolaLohinski/jinja` provider version from `1.17.0` to `2.0.0`.
+  Consumers must run `terraform init -upgrade` to refresh the provider.
 
 ### Fix and enhancements
 
