@@ -1,5 +1,15 @@
 # Changelog
 
+## Release v1.3.2 (2026-06-12)
+
+### Features
+
+* Add `es_cluster_settings` input applying persistent Elasticsearch cluster settings (e.g. disk watermarks) via the cluster-settings API at startup, through a wrapper entrypoint
+
+### Fix and enhancements
+
+* Replace the broken disk-watermark example with `es_cluster_settings` (the embedded ES ignores `-Des.*` JVM properties), and show `settings` used for ES JVM options
+
 ## Release v1.3.1 (2026-06-11)
 
 ### Fix and enhancements
