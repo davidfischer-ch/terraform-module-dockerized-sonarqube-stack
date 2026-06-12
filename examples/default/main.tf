@@ -47,14 +47,19 @@ module "sonarqube" {
 
   # SonarQube Application
 
+  # SONAR_SEARCH_JAVAADDITIONALOPTS is for ES JVM options only (heap, GC); NOT cluster
+  # settings.
   settings = {
-    # Raise ES disk watermarks above defaults (low=85%, high=90%, flood=95%)
-    # when /data is shared with other services.
-    SONAR_SEARCH_JAVAADDITIONALOPTS = join(" ", [
-      "-Des.cluster.routing.allocation.disk.watermark.low=95%",
-      "-Des.cluster.routing.allocation.disk.watermark.high=95%",
-      "-Des.cluster.routing.allocation.disk.watermark.flood_stage=98%",
-    ])
+    SONAR_SEARCH_JAVAADDITIONALOPTS = "-Xms1g -Xmx1g"
+  }
+
+  # ES cluster settings go through the cluster-settings API at startup (the embedded ES
+  # ignores -Des.* JVM properties). Absolute free-space disk watermarks suit a shared disk:
+  # the node only goes read-only below 40gb free.
+  es_cluster_settings = {
+    "cluster.routing.allocation.disk.watermark.low"         = "80gb"
+    "cluster.routing.allocation.disk.watermark.high"        = "60gb"
+    "cluster.routing.allocation.disk.watermark.flood_stage" = "40gb"
   }
 
   domains = ["sonarqube.example.com"]

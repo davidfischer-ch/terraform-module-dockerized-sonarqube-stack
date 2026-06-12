@@ -20,7 +20,8 @@ module "app" {
 
   # SonarQube Application
 
-  settings = var.settings
+  settings            = var.settings
+  es_cluster_settings = var.es_cluster_settings
 
   database_host     = module.database.host
   database_port     = module.database.port

@@ -110,6 +110,7 @@ data_directory/
 | `max_body_size` | `string` | `"20M"` | Nginx max body size. |
 | `data_directory` | `string` | — | Host path for persistent volumes. |
 | `settings` | `map(string)` | `{}` | Additional environment variables for SonarQube. |
+| `es_cluster_settings` | `map(string)` | `{}` | Persistent Elasticsearch cluster settings applied via the cluster-settings API at startup (e.g. disk watermarks). Empty map disables it; the embedded ES ignores `-Des.*` JVM properties. |
 | `debug` | `bool` | `false` | Enable debug mode. |
 | `domains` | `list(string)` | — | Domains for the reverse proxy. |
 | `postgresql_image_name` | `string` | `"postgres:latest"` | [PostgreSQL](https://hub.docker.com/_/postgres/tags) Docker image name. |

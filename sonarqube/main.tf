@@ -5,7 +5,9 @@ resource "docker_container" "server" {
   image = var.image_id
   name  = var.identifier
 
-  # entrypoint = []
+  # Wrapper entrypoint applies ES cluster settings via the API at startup, then execs the
+  # real SonarQube entrypoint. Only when es_cluster_settings is set; otherwise image default.
+  entrypoint = length(var.es_cluster_settings) > 0 ? ["${local.container_config_directory}/es-entrypoint.sh"] : null
 
   must_run    = var.enabled
   start       = var.enabled
@@ -15,7 +17,12 @@ resource "docker_container" "server" {
 
   # shm_size = 256 # MB
 
-  env = toset([for k, v in local.settings : "${k}=${v}"])
+  env = toset(concat(
+    [for k, v in local.settings : "${k}=${v}"],
+    length(var.es_cluster_settings) > 0
+    ? ["SONARQUBE_ES_CLUSTER_SETTINGS=${jsonencode({ persistent = var.es_cluster_settings })}"]
+    : []
+  ))
 
   dynamic "host" {
     for_each = var.hosts
@@ -53,6 +60,15 @@ resource "docker_container" "server" {
     container_path = local.container_temp_directory
     host_path      = local.host_temp_directory
     read_only      = false
+  }
+
+  dynamic "volumes" {
+    for_each = length(var.es_cluster_settings) > 0 ? [1] : []
+    content {
+      container_path = "${local.container_config_directory}/es-entrypoint.sh"
+      host_path      = local_file.es_entrypoint[0].filename
+      read_only      = true
+    }
   }
 
   provisioner "local-exec" {

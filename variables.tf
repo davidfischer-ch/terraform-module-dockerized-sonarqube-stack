@@ -101,6 +101,12 @@ variable "settings" {
   default     = {}
 }
 
+variable "es_cluster_settings" {
+  type        = map(string)
+  description = "Persistent Elasticsearch cluster settings applied via the cluster-settings API at startup (e.g. disk watermarks). Empty map disables it. Required because the embedded ES ignores -Des.* JVM properties, so these cannot be set through SONAR_SEARCH_JAVAADDITIONALOPTS (which is only for ES JVM options)."
+  default     = {}
+}
+
 variable "debug" {
   type        = bool
   description = "Enable SonarQube debug mode."
