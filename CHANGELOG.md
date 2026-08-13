@@ -1,5 +1,13 @@
 # Changelog
 
+## Release v1.3.3 (2026-08-13)
+
+Diff: https://github.com/davidfischer-ch/terraform-module-dockerized-sonarqube-stack/compare/1.3.2...1.3.3
+
+### Features
+
+* Trust the `app` Docker network on the app-level nginx reverse proxy (`real_ip_from`) so `$remote_addr` reflects the real client IP instead of the network gateway address
+
 ## Release v1.3.2 (2026-06-12)
 
 ### Features
